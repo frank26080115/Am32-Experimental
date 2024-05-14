@@ -17875,7 +17875,7 @@
       <TargetName>ARIA_70A_F051</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -18203,7 +18203,7 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F051x8,USE_FULL_LL_DRIVER, ARIA_70A_F051</Define>
+              <Define>STM32F051x8,USE_FULL_LL_DRIVER, NEUTRONRC_F051</Define>
               <Undefine></Undefine>
               <IncludePath>..\mcu\f051\Drivers\CMSIS\Include;..\mcu\f051\Drivers\CMSIS\Device\ST\STM32F0xx\Include;..\mcu\f051\Drivers\STM32F0xx_HAL_Driver\Inc;..\mcu\f051\Inc;..\inc</IncludePath>
             </VariousControls>

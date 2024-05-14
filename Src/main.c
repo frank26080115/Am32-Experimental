@@ -540,6 +540,9 @@ uint16_t armed_count_threshold = 1000;
 char armed = 0;
 uint16_t zero_input_count = 0;
 
+char master_arm = 0;
+char master_armed_already = 0;
+
 uint16_t input = 0;
 uint16_t newinput = 0;
 char inputSet = 0;
@@ -822,6 +825,9 @@ void loadEEpromSettings()
 				
 				if(eepromBuffer[69] == 85){
 					dual_input_brushed_mode = 1;
+				}
+				else if (eepromBuffer[69] == 0xAB) {
+					master_arm = 1;
 				}
 				
 				crsf_second_input_channel = eepromBuffer[70];
@@ -1368,6 +1374,23 @@ void tenKhzRoutine()
     one_khz_loop_counter++;
 	  ROTC_divider_cnt++;
     if (!armed) {
+
+			if (master_arm) {
+				if (crsf_second_input > 1000) {
+                    // trigger arming condition if not currently armed and the master-arm switch is ON
+					armed_timeout_count = LOOP_FREQUENCY_HZ + 1;
+					zero_input_count = 31;
+                    newinput = 0;
+                    adjusted_input = 0;
+					master_armed_already = 1;
+				}
+                else {
+                    // else do not allow arming even if stick position is zero
+                    armed_timeout_count = 0;
+					zero_input_count = 0;
+                }
+			}
+			
         if (cell_count == 0) {
             if (inputSet) {
                 if (adjusted_input == 0) {
@@ -1945,6 +1968,14 @@ setInput();
         if (VARIABLE_PWM) {
 					tim1_arr = map(commutation_interval, 96, 200, TIMER1_MAX_ARR / 2, TIMER1_MAX_ARR);
 			  }
+
+				if (master_arm) {
+                    // if master-arm is off, then simulate a signal timeout
+					if (crsf_second_input < 1000 && master_armed_already != 0) {
+						signaltimeout = (LOOP_FREQUENCY_HZ << 1) + 1;
+					}
+				}
+				
         if (signaltimeout > (LOOP_FREQUENCY_HZ >> 1)) { // half second timeout when armed;
             if (armed) {
                 allOff();

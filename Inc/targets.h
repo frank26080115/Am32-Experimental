@@ -670,9 +670,9 @@
 #define USE_RGB_LED
 #define RED_PIN LL_GPIO_PIN_8
 #define RED_PORT GPIOB
-#define GREEN_PIN LL_GPIO_PIN_3
+#define GREEN_PIN LL_GPIO_PIN_5
 #define GREEN_PORT GPIOB
-#define BLUE_PIN LL_GPIO_PIN_5
+#define BLUE_PIN LL_GPIO_PIN_3
 #define BLUE_PORT GPIOB
 #endif
 
